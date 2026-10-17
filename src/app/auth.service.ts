@@ -9,6 +9,8 @@ export class AuthService {
   user = signal<Session | null>(null);
   /** Remembered after expiry so the re-login page can prefill the email. */
   lastEmail = signal<string>('');
+  /** Why the user is on /relogin: first-time confirmation or a timed-out session. */
+  reason = signal<'confirm' | 'expired'>('expired');
 
   // Demo only: replace with a real API call.
   login(email: string, password: string): boolean {
@@ -19,7 +21,17 @@ export class AuthService {
     return true;
   }
 
+  /** Step 1 (login page): check credentials, remember email, then go to /relogin. */
+  start(email: string, password: string): boolean {
+    if (!email.includes('@') || password.length < 6) return false;
+    this.lastEmail.set(email);
+    this.reason.set('confirm');
+    this.router.navigate(['/relogin']);
+    return true;
+  }
+
   expire() {
+    this.reason.set('expired');
     this.user.set(null);
     this.router.navigate(['/relogin']);
   }

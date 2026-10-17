@@ -1,6 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { CurrencyPipe, DatePipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { AuthService } from './auth.service';
+import { BillingService } from './billing.service';
 import { LogoComponent } from './logo.component';
 
 type Invoice = { id: string; date: string; amount: number; status: 'Paid' | 'Due' };
@@ -8,7 +10,7 @@ type Invoice = { id: string; date: string; amount: number; status: 'Paid' | 'Due
 @Component({
   selector: 'app-billing',
   standalone: true,
-  imports: [CurrencyPipe, DatePipe, LogoComponent],
+  imports: [CurrencyPipe, DatePipe, RouterLink, LogoComponent],
   template: `
   <header class="bar">
     <app-logo />
@@ -32,9 +34,9 @@ type Invoice = { id: string; date: string; amount: number; status: 'Paid' | 'Due
 
       <section class="box">
         <h2>Payment method</h2>
-        <p class="big">Visa ending 4242</p>
-        <p class="muted">Expires 08/2028</p>
-        <button class="btn ghost">Update card</button>
+        <p class="big">{{ billing.card().brand }} ending {{ billing.card().last4 }}</p>
+        <p class="muted">Expires {{ billing.card().expiry }}</p>
+        <a class="btn ghost" routerLink="/billing/update-card">Update card</a>
       </section>
     </div>
 
@@ -66,6 +68,7 @@ type Invoice = { id: string; date: string; amount: number; status: 'Paid' | 'Due
     h2 { font-size: 1rem; margin: 0 0 12px; }
     .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-bottom: 16px; }
     .box { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 20px; }
+    a.btn { display: inline-block; text-decoration: none; text-align: center; }
     .big { font-size: 1.4rem; font-weight: 700; margin: 0; }
     .big small { font-size: .95rem; font-weight: 400; color: var(--muted); }
     .muted { color: var(--muted); margin: 4px 0 16px; }
@@ -79,6 +82,7 @@ type Invoice = { id: string; date: string; amount: number; status: 'Paid' | 'Due
 })
 export class BillingComponent {
   auth = inject(AuthService);
+  billing = inject(BillingService);
   renewal = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 1);
   invoices: Invoice[] = [
     { id: 'INV-1042', date: '2026-10-01', amount: 49, status: 'Due' },

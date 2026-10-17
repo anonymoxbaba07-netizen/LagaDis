@@ -12,8 +12,13 @@ import { LogoComponent } from './logo.component';
   <main class="shell">
     <section class="panel">
       <app-logo />
-      <h1>Your session expired</h1>
-      <p class="sub">You were signed out after a period of inactivity. Enter your password to continue.</p>
+      @if (auth.reason() === 'expired') {
+        <h1>Your session expired</h1>
+        <p class="sub">You were signed out after a period of inactivity. Enter your password to continue.</p>
+      } @else {
+        <h1>Confirm it's you</h1>
+        <p class="sub">Enter your password again to open your billing.</p>
+      }
       <form (ngSubmit)="submit()">
         <label for="email">Email</label>
         <input id="email" name="email" type="email" [value]="email" readonly>

@@ -1,5 +1,5 @@
 # Ledgerline – 3-page Angular SPA
-Routes: /login · /relogin · /billing (guarded)
+Flow: /login → /relogin → /billing → /billing/update-card → back to /billing
 
 ## Local
     npm install

@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
 import { LogoComponent } from './logo.component';
 
@@ -27,11 +26,10 @@ import { LogoComponent } from './logo.component';
 })
 export class LoginComponent {
   private auth = inject(AuthService);
-  private router = inject(Router);
   email = ''; password = ''; error = '';
 
   submit() {
-    if (this.auth.login(this.email, this.password)) this.router.navigate(['/billing']);
-    else this.error = 'Enter a valid email and a password of at least 6 characters.';
+    if (this.auth.start(this.email, this.password)) return;
+    this.error = 'Enter a valid email and a password of at least 6 characters.';
   }
 }
