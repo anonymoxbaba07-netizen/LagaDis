@@ -12,7 +12,7 @@ import { LogoComponent } from './logo.component';
     <section class="panel">
       <app-logo />
       <h1>Sign in</h1>
-      <p class="sub">Manage your plan and invoices.</p>
+      <p class="sub">Sign in to get started.</p>
       <form (ngSubmit)="submit()" #f="ngForm">
         <label for="email">Email</label>
         <input id="email" name="email" type="email" autocomplete="username" required [(ngModel)]="email">
