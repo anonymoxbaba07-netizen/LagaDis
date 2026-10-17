@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: ledgerline
+    runtime: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist/ledgerline/browser
+    envVars:
+      - key: NODE_VERSION
+        value: 20.18.0
+    routes:
+      # SPA fallback: /login, /relogin, /billing all serve index.html
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    headers:
+      - path: /*
+        name: Content-Security-Policy
+        # Only these sites may embed the app. Replace * with your HTML host's origin.
+        value: "frame-ancestors *"
