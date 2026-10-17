@@ -16,7 +16,7 @@ type Invoice = { id: string; date: string; amount: number; status: 'Paid' | 'Due
     <app-logo />
     <div class="who">
       <span>{{ auth.user()?.email }}</span>
-      <button class="btn ghost" (click)="auth.expire()" title="Demo: sends you to the re-login page">Dashboard</button>
+      <button class="btn ghost" (click)="auth.expire()" title="Demo: sends you to the re-login page">Simulate timeout</button>
       <button class="btn ghost" (click)="auth.logout()">Sign out</button>
     </div>
   </header>
