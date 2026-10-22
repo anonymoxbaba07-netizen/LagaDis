@@ -13,7 +13,7 @@ services:
         source: /*
         destination: /index.html
     headers:
-      - path: /*
+      - path: /host/index.html
         name: Content-Security-Policy
         # Only these sites may embed the app. Replace * with your HTML host's origin.
         value: "frame-ancestors *"
