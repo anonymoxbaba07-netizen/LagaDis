@@ -16,4 +16,4 @@ services:
       - path: /*
         name: Content-Security-Policy
         # Only these sites may embed the app. Replace * with your HTML host's origin.
-        value: "frame-ancestors https://host-dep.onrender.com/"
+        value: "frame-ancestors https://host-dep.onrender.com"
